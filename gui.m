@@ -31,7 +31,17 @@ pop_scale = uicontrol(p_contrl, 'Style', 'popupmenu',...
     'position', [100, 68, 100, 16]);
 %pop_decode.String = {'repeat', 'zero padding'};
     
-
+% set defalut figure size and positions
+figure(1)
+fig1_pos = get(gcf, 'Position');
+fig1_pos(1) = 100;
+fig1_pos(2) = 0;
+set(gcf, 'Position', fig1_pos);
+figure(2)
+fig2_pos = get(gcf, 'Position');
+fig2_pos(1) = 0;
+fig2_pos(3) = 1800;
+set(gcf, 'Position', fig2_pos);
 sin_spec(str2num(get(edit_dec,'string')), get(slider_fy, 'value'), 'linear', 'repeat')
 
 addlistener(slider_fy,'ContinuousValueChange',...
