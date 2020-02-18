@@ -52,6 +52,11 @@ for x_nyquist = [0:0.5:fs_ratio]
     xline(x_nyquist,'--r');
     xline(-x_nyquist,'--r');
 end
+% plot lines where the original sine frequency is
+xline(f_sin/fs_eff, ':black', 'f_{sig}', 'LabelOrientation', 'horizontal');
+xline(-f_sin/fs_eff, ':black', '-f_{sig}', ...
+    'LabelOrientation', 'horizontal', ...
+    'LabelHorizontalAlignment', 'left');
 xlabel('frequency normalized to effective f_s')
 % integrate over PSD to get the total (average) power
 P_tot=sum(Y_psd)*fs/Nsamp;
