@@ -23,7 +23,8 @@ y=sin(2*pi*f_sin*t);
 
 % calculate power spectral density
 Y_fft=fftshift(fft(y)); % zero-centered fft
-Y_psd=(Y_fft.*conj(Y_fft))./Nsamp;
+Y_psd=(Y_fft.*conj(Y_fft))./(Nsamp*fs);
+
 %Y_psd=abs(Y_fft).^2./Nsamp;
 
 %% Graph %%
@@ -41,13 +42,12 @@ subplot(2,1,2)
 switch psd_scale
     case 'linear'
         plot(f_norm,Y_psd)
-        %ylim([0,1000/2^(2*dec_n)])
-        ylim([0,700])
+        ylim([0,1000/fs]) % static plot scale
         ylabel('Power')
     case 'log'
         semilogy(f_norm, Y_psd)
         %plot(f_norm,log10(Y_psd))
-        ylim([10^(-5),10^5])
+        ylim([ 10^(-5-log10(fs)),10^(5-log10(fs)) ]) % static plot scale
         ylabel('Power (log)')
 end
 fs_ratio = (fs/2)/fs_eff;
@@ -56,5 +56,7 @@ for x_nyquist = [0:0.5:fs_ratio]
     xline(-x_nyquist,'--r');
 end
 xlabel('normalized to effective f_s')
+P_tot=sum(Y_psd)*fs/Nsamp;
+title("P_{tot}="+P_tot)
 grid on
 figure(1)
